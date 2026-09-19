@@ -365,7 +365,8 @@ function listenChat(){
 
   const area = document.getElementById('chatArea');
   area.innerHTML = '';
-  const roomRef = query(ref(db, `publikchat/messages`), limitToLast(200));
+  // PATH BARU: publikchat/messages (langsung, tanpa rooms/username)
+  const roomRef = query(ref(db, 'publikchat/messages'), limitToLast(200));
 
   unsubscribeChat = onValue(roomRef, (snapshot) => {
     area.innerHTML = '';
@@ -427,6 +428,7 @@ function sendText(){
   const inp = document.getElementById('msgInput');
   const v = inp.value.trim();
   if(!v) return;
+  // PATH BARU: publikchat/messages
   push(ref(db, 'publikchat/messages'), {
     user: currentUser, type: 'text', content: v, ts: Date.now()
   });
